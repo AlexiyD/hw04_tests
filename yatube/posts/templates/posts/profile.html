@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru"> 
+  <head>  
+    <title>Профайл пользователя</title>
+  </head>
+  <body>       
+    <header>
+      <nav class="navbar navbar-light" style="background-color: lightskyblue">
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            <img src="/static/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            <span style="color:red">Ya</span>tube
+          </a>
+        </div>
+      </nav>      
+    </header>
+    <main>
+      <div class="container py-5">        
+        <h1>Все посты пользователя</h1>
+        <h3>Всего постов: {{ post_count}} </h3>
+        {% for post in page_obj %}
+          {% include "includes/profile_post_card.html"%}
+          {% url 'posts:group_posts' post.group.slug as the_url %}
+          {% if the_url %}
+            <a href="{{ the_url }}">все записи группы</a>
+          {% endif %}
+          {% if not forloop.last %}<hr>{% endif %}
+        {% endfor %} 
+        {% include 'posts/includes/paginator.html' %} 
+      </div>
+    </main>
+    <footer class="border-top text-center py-3">
+      <p>© Copyright <span style="color:red">Ya</span>tube</p>    
+    </footer>
+  </body>
+</html>
