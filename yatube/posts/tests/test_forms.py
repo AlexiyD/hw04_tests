@@ -4,25 +4,23 @@ from posts.forms import PostForm
 from django.urls import reverse
 
 
-
-
 class TaskCreateFormTests(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.user = User.objects.create_user(username='test_user')
         cls.group = Group.objects.create(
-            title = 'Тестовый заголовок',
-            description = 'Тестовое описание',
-            slug = 'test-slug',
+            title='Тестовый заголовок',
+            description='Тестовое описание',
+            slug='test-slug',
         )
         cls.post = Post.objects.create(
-            text = 'Тестовый текст',
-            author = cls.user,
-            group = cls.group,
+            text='Тестовый текст',
+            author=cls.user,
+            group=cls.group,
         )
         cls.form = PostForm()
-    
+
     def setUp(self) -> None:
         self.guest_client = Client()
         self.authorized_client = Client()
@@ -35,15 +33,15 @@ class TaskCreateFormTests(TestCase):
             'group': self.group.id,
         }
         response = self.authorized_client.post(
-        reverse('posts:post_create'),
-        data=form_data
+            reverse('posts:post_create'),
+            data=form_data
         )
         self.assertRedirects(response, reverse('posts:profile', kwargs={'username':'test_user'}))
         self.assertEqual(Post.objects.count(), posts_count +1)
         self.assertTrue(Post.objects.filter(
-            text = 'Тестовый текст',
-            author = self.user,
-            group = self.group,
+            text='Тестовый текст',
+            author=self.user,
+            group=self.group,
         ).exists())
 
     def test_post_edit(self):
@@ -52,9 +50,10 @@ class TaskCreateFormTests(TestCase):
             'group': self.group.id,
         }
         response = self.authorized_client.post(
-             reverse('posts:post_edit', kwargs={'post_id': self.post.pk}),
-             data=form_data,
+            reverse('posts:post_edit', kwargs={'post_id': self.post.pk}),
+            data=form_data,
         )
-        self.assertRedirects(response, reverse('posts:post_detail', kwargs={'post_id': self.post.pk}))
+        self.assertRedirects(response, reverse('posts:post_detail',
+                             kwargs={'post_id': self.post.pk}))
         self.post.refresh_from_db()
         self.assertEqual(self.post.text, 'текст новый')

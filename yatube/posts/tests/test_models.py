@@ -13,12 +13,12 @@ class TaskModelTest(TestCase):
             description='Тестовое описание',
         )
         cls.post = Post.objects.create(
-            author = cls.user,
-            text = 'Тестовый пост',
+            author=cls.user,
+            text='Тестовый пост',
         )
 
     def test_models_have_correct_object_names(self):
-         self.assertEqual(str(self.post), self.post.text[:15])
+        self.assertEqual(str(self.post), self.post.text[:15])
 
     def test_models_have_correct_object_names_group(self):
         self.assertEqual(str(self.group), self.group.title)

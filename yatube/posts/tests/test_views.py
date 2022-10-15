@@ -1,10 +1,7 @@
-
 from django import forms
 from django.test import Client, TestCase
 from django.urls import reverse
 from ..models import Group, Post, User
-
-
 
 
 class PostsViewsTests(TestCase):
@@ -114,7 +111,7 @@ class PostsViewsTests(TestCase):
         self.assertEqual(first_object.author, self.user)
         self.assertEqual(first_object.text, 'Текст')
         self.assertEqual(response.context.get('profile'), self.user)
-        
+
 
     def test_detail_page_show_correct(self):
         """Шаблон post_detail сформирован с правильным контекстом."""
@@ -123,7 +120,6 @@ class PostsViewsTests(TestCase):
             kwargs={'post_id': 1}
         ))
         self.assertEqual(response.context.get('post').text, 'Текст')
-      
 
 
 class PaginatorViewsTest(TestCase):

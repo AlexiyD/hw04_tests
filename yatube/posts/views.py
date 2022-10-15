@@ -53,7 +53,6 @@ def profile(request, username):
         'page_obj': page_obj,
         'paginator': paginator,
         'post_count': post_count
-        
     }
     return render(request, 'posts/profile.html', context)
 

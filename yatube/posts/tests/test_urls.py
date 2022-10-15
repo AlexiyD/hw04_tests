@@ -3,20 +3,19 @@ from posts.models import Group, Post, User
 from http import HTTPStatus
 
 
-
 class PostsURLTests(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.user = User.objects.create_user(username='test_user')
         cls.group = Group.objects.create(
-            title = 'Тестовый заголовок',
+            title='Тестовый заголовок',
             description = 'Тестовое описание',
-            slug = 'test-slug',
+            slug='test-slug',
         )
         cls.post = Post.objects.create(
-            text = 'Тестовый текст',
-            author = cls.user,
+            text='Тестовый текст',
+            author=cls.user,
             pk=2,
         )
 
@@ -37,7 +36,8 @@ class PostsURLTests(TestCase):
         for template, address in templates_url_names.items():
             with self.subTest(address=address):
                 response = self.authorized_client.get(address)
-                self.assertTemplateUsed(response, template) 
+                self.assertTemplateUsed(response, template)
+
     def test_create_url_template(self):
         response = self.authorized_client.get('/create/')
         self.assertTemplateUsed(response, 'posts/post_create.html')
@@ -68,5 +68,4 @@ class PostsURLTests(TestCase):
 
     def test_edit(self):
         response = self.authorized_client.get('/posts/2/edit/')
-        self.assertEqual(response.status_code, HTTPStatus.OK) 
-
+        self.assertEqual(response.status_code, HTTPStatus.OK)
