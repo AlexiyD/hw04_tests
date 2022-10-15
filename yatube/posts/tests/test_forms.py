@@ -36,9 +36,9 @@ class TaskCreateFormTests(TestCase):
             reverse('posts:post_create'),
             data=form_data
         )
-        self.assertRedirects(response, reverse('posts:profile', 
+        self.assertRedirects(response, reverse('posts:profile',
                              kwargs={'username': 'test_user'}))
-        self.assertEqual(Post.objects.count(), posts_count +1)
+        self.assertEqual(Post.objects.count(), posts_count + 1)
         self.assertTrue(Post.objects.filter(
             text='Тестовый текст',
             author=self.user,

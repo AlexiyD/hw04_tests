@@ -8,11 +8,10 @@ class PostsURLTests(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.user = User.objects.create_user(username='test_user')
-        cls.group = Group.objects.create(
-            title='Тестовый заголовок',
-            description = 'Тестовое описание',
-            slug='test-slug',
-        )
+        cls.group = Group.objects.create(title='Тестовый заголовок',
+                                         description='Тестовое описание',
+                                         slug='test-slug',
+                                         )
         cls.post = Post.objects.create(
             text='Тестовый текст',
             author=cls.user,

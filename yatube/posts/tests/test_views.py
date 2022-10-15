@@ -112,7 +112,6 @@ class PostsViewsTests(TestCase):
         self.assertEqual(first_object.text, 'Текст')
         self.assertEqual(response.context.get('profile'), self.user)
 
-
     def test_detail_page_show_correct(self):
         """Шаблон post_detail сформирован с правильным контекстом."""
         response = self.authorized_client.get(reverse(
