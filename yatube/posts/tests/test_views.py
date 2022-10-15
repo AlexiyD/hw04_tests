@@ -62,7 +62,7 @@ class PostsViewsTests(TestCase):
         }
         for value, expected in form_fields.items():
             with self.subTest(value=value):
-                form_field = response.context.get('form').fields.get(value)
+                form_field = response.context['form'].fields.get(value)
                 self.assertIsInstance(form_field, expected)
 
     def test_edit_post(self):
@@ -77,7 +77,7 @@ class PostsViewsTests(TestCase):
         }
         for value, expected in form_fields.items():
             with self.subTest(value=value):
-                form_field = response.context.get('form').fields.get(value)
+                form_field = response.context['form'].fields.get(value)
                 self.assertIsInstance(form_field, expected)
 
     def test_index_page_show_correct_context(self):
@@ -97,7 +97,7 @@ class PostsViewsTests(TestCase):
         self.assertEqual(first_object.author, self.user)
         self.assertEqual(first_object.text, 'Текст')
         self.assertEqual(
-            response.context.get('group'),
+            response.context['group'],
             Group.objects.get(title='Тестовая группа')
         )
 
@@ -110,7 +110,7 @@ class PostsViewsTests(TestCase):
         first_object = response.context['page_obj'][0]
         self.assertEqual(first_object.author, self.user)
         self.assertEqual(first_object.text, 'Текст')
-        self.assertEqual(response.context.get('profile'), self.user)
+        self.assertEqual(response.context['profile'], self.user)
 
     def test_detail_page_show_correct(self):
         """Шаблон post_detail сформирован с правильным контекстом."""
@@ -118,7 +118,7 @@ class PostsViewsTests(TestCase):
             'posts:post_detail',
             kwargs={'post_id': 1}
         ))
-        self.assertEqual(response.context.get('post').text, 'Текст')
+        self.assertEqual(response.context['post'].text, 'Текст')
 
 
 class PaginatorViewsTest(TestCase):
@@ -132,9 +132,9 @@ class PaginatorViewsTest(TestCase):
             description='Тестовое описание',
         )
         Post.objects.bulk_create(
-            [Post(author=cls.user,
+            Post(author=cls.user,
                   group=Group.objects.get(title='Тестовая группа'),
-                  text='Текст',) for _ in range(20)]
+                  text='Текст',) for _ in range(20)
         )
 
     def setUp(self):

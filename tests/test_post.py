@@ -19,7 +19,7 @@ class TestPostView:
         assert response.status_code != 404, (
             'Страница `/posts/<post_id>/` не найдена, проверьте этот адрес в *urls.py*'
         )
-        post_context = get_field_from_context(response.context, Post)
+        post_context = get_field_from_context(response.context.pop(), Post)
         assert post_context is not None, (
             'Проверьте, что передали статью в контекст страницы `/posts/<post_id>/` типа `Post`'
         )
