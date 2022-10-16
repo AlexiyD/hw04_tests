@@ -1,53 +1,48 @@
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <title>Пост</title>
-  </head>
-  <body>
-    <header>
-      <nav class="navbar navbar-light" style="background-color: lightskyblue">
-        <div class="container">
-          <a class="navbar-brand" href="/">
-            <img src="/static/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            <span style="color:red">Ya</span>tube
-          </a>
-        </div>
-      </nav>      
-    </header>
+{% extends "base.html" %}
+{% load static %}
+{% block title %} <title>Пост {{post.text|truncatechars:30 }}</title> {% endblock %}
+{% block content %}
+  <body>       
     <main>
       <div class="row">
         <aside class="col-12 col-md-3">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              Дата публикации:
-            </li>  
-            <li class="list-group-item">
-              Группа: 
-              <a href="<!-- -->">
-                все записи группы
-              </a>
+              Дата публикации: {{ post.pub_date|date:"d E Y" }}
             </li>
+            {% if post.group %}
+              <li class="list-group-item">
+                Группа: {{ group.name }}
+                <a href="{% url 'posts:group_posts' post.group.slug %}">
+                  все записи группы
+                </a>
+              </li>
+            {% endif %}
+              <li class="list-group-item">
+                Автор: {{ post.author.get_full_name }}
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Всего постов автора:  <span >{{ post_count }}</span>
+              </li>
             <li class="list-group-item">
-              Автор: 
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Всего постов автора:  <span ></span>
-            </li>
-            <li class="list-group-item">
-              <a href="<!-- -->">
+              <a href="{% url 'posts:profile' post.author%}">
                 все посты пользователя
               </a>
             </li>
+            {% if user == post.author %}
+            <a class="btn btn-default" href="{% url 'posts:post_edit' post_id=post.pk %}"><span class="list-group-item">
+              Редактировать запись</span></a>
           </ul>
+          {% endif %}
         </aside>
         <article class="col-12 col-md-9">
           <p>
+            {{ posts.text }}
+          </p>
+          <p class="col-12 col-md-3">
           </p>
         </article>
       </div> 
     </main>
-    <footer class="border-top text-center py-3">
-      <p>© Copyright <span style="color:red">Ya</span>tube</p>
-    </footer>
   </body>
-</html> 
+  {% endblock %}

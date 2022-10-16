@@ -8,7 +8,7 @@ class PostsViewsTests(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.user = User.objects.create_user(username='AlexiyD')
+        cls.user = User.objects.create_user(username='test_user')
         cls.group = Group.objects.create(
             title='Тестовая группа',
             slug='test-slug',
@@ -22,7 +22,7 @@ class PostsViewsTests(TestCase):
     @classmethod
     def setUp(self):
         self.guest_client = Client()
-        self.user = User.objects.get(username='AlexiyD')
+        self.user = User.objects.get(username='test_user')
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
 
@@ -36,7 +36,7 @@ class PostsViewsTests(TestCase):
             ): 'posts/group_list.html',
             reverse(
                 'posts:profile',
-                kwargs={'username': 'AlexiyD'}
+                kwargs={'username': 'test_user'}
             ): 'posts/profile.html',
             reverse(
                 'posts:post_detail',
@@ -105,7 +105,7 @@ class PostsViewsTests(TestCase):
         """Шаблон profile сформирован с правильным контекстом."""
         response = self.authorized_client.get(reverse(
             'posts:profile',
-            kwargs={'username': 'AlexiyD'}
+            kwargs={'username': 'test_user'}
         ))
         first_object = response.context['page_obj'][0]
         self.assertEqual(first_object.author, self.user)
@@ -125,7 +125,7 @@ class PaginatorViewsTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.user = User.objects.create_user(username='AlexiyD')
+        cls.user = User.objects.create_user(username='test_user')
         cls.group = Group.objects.create(
             title='Тестовая группа',
             slug='test-slug',
@@ -134,12 +134,13 @@ class PaginatorViewsTest(TestCase):
         Post.objects.bulk_create(
             Post(author=cls.user,
                  group=Group.objects.get(title='Тестовая группа'),
-                 text='Текст',) for _ in range(20)
+                 text='Текст',)
+                 for _ in range(20)
         )
 
     def setUp(self):
         self.guest_client = Client()
-        self.user = User.objects.get(username='AlexiyD')
+        self.user = User.objects.get(username='test_user')
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
 
@@ -152,7 +153,7 @@ class PaginatorViewsTest(TestCase):
             ),
             reverse(
                 'posts:profile',
-                kwargs={'username': 'AlexiyD'}
+                kwargs={'username': 'test_user'}
             )
         ]
         for reverse_name in pages_names:
