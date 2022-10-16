@@ -95,4 +95,3 @@ def post_edit(request, post_id):
     return render(request, template,
                   {'form': form, 'is_edit': True, 'post': post}
                   )
-                  
