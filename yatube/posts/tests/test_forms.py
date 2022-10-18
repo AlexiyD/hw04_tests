@@ -1,7 +1,9 @@
+from urllib import response
 from django.test import Client, TestCase
 from posts.models import User, Group, Post
 from posts.forms import PostForm
 from django.urls import reverse
+
 
 
 class TaskCreateFormTests(TestCase):
@@ -26,10 +28,10 @@ class TaskCreateFormTests(TestCase):
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
 
-    def test_create_post(self):
+    def test_authorized_client_create_post(self):
         posts_count = Post.objects.count()
         form_data = {
-            'text': 'текст поста',
+            'text': 'текст',
             'group': self.group.id,
         }
         response = self.authorized_client.post(
@@ -40,12 +42,12 @@ class TaskCreateFormTests(TestCase):
                              kwargs={'username': 'test_user'}))
         self.assertEqual(Post.objects.count(), posts_count + 1)
         self.assertTrue(Post.objects.filter(
-            text='Тестовый текст',
+            text='текст',
             author=self.user,
             group=self.group,
         ).exists())
 
-    def test_post_edit(self):
+    def test_authorized_client_post_edit(self):
         form_data = {
             'text': 'текст новый',
             'group': self.group.id,
@@ -58,3 +60,12 @@ class TaskCreateFormTests(TestCase):
                              kwargs={'post_id': self.post.pk}))
         self.post.refresh_from_db()
         self.assertEqual(self.post.text, 'текст новый')
+
+
+    def test_guest_create_post(self):
+        posts_count = Post.objects.count()
+        form_data = {'text': 'Тестовый текст'}
+        self.guest_client.post(reverse('posts:post_create'), data=form_data)
+        self.assertEqual(Post.objects.count(), posts_count)
+
+  

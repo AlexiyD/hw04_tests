@@ -23,7 +23,7 @@ class PostsURLTests(TestCase):
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
 
-    def test_urls_uses_correct_template(self):
+    def test_urls_users_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""
         templates_url_names = {
             'posts/index.html': '/',

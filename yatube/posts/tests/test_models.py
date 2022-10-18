@@ -1,6 +1,7 @@
 from django.test import TestCase
 from ..models import Group, Post, User
 
+length: int = 15
 
 class TaskModelTest(TestCase):
     @classmethod
@@ -14,11 +15,11 @@ class TaskModelTest(TestCase):
         )
         cls.post = Post.objects.create(
             author=cls.user,
-            text='Тестовый пост',
+            text='Тестовый пост!',
         )
 
     def test_models_have_correct_object_names(self):
-        self.assertEqual(str(self.post), self.post.text[:15])
+        self.assertEqual(str(self.post), self.post.text[:length])
 
     def test_models_have_correct_object_names_group(self):
         self.assertEqual(str(self.group), self.group.title)

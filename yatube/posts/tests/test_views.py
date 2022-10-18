@@ -3,6 +3,8 @@ from django.test import Client, TestCase
 from django.urls import reverse
 from ..models import Group, Post, User
 
+amount_posts: int = 10
+test_amposts: int = 20
 
 class PostsViewsTests(TestCase):
     @classmethod
@@ -134,7 +136,7 @@ class PaginatorViewsTest(TestCase):
         Post.objects.bulk_create(
             Post(author=cls.user,
                  group=Group.objects.get(title='Тестовая группа'),
-                 text='Текст',) for _ in range(20)
+                 text='Текст',) for _ in range(test_amposts)
         )
 
     def setUp(self):
@@ -158,6 +160,6 @@ class PaginatorViewsTest(TestCase):
         for reverse_name in pages_names:
             with self.subTest(reverse_name=reverse_name):
                 response = self.guest_client.get(reverse_name)
-                self.assertEqual(len(response.context['page_obj']), 10)
+                self.assertEqual(len(response.context['page_obj']), amount_posts)
                 response = self.guest_client.get(reverse_name + '?page=2')
-                self.assertEqual(len(response.context['page_obj']), 10)
+                self.assertEqual(len(response.context['page_obj']), amount_posts)
