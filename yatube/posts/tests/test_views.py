@@ -162,7 +162,7 @@ class PaginatorViewsTest(TestCase):
             with self.subTest(reverse_name=reverse_name):
                 response = self.guest_client.get(reverse_name)
                 self.assertEqual(len(response.context['page_obj']),
-                amount_posts)
+                                 amount_posts)
                 response = self.guest_client.get(reverse_name + '?page=2')
                 self.assertEqual(len(response.context['page_obj']),
-                amount_posts)
+                                 amount_posts)
