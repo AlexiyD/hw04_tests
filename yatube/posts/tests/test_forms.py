@@ -1,9 +1,7 @@
-from urllib import response
 from django.test import Client, TestCase
 from posts.models import User, Group, Post
 from posts.forms import PostForm
 from django.urls import reverse
-
 
 
 class TaskCreateFormTests(TestCase):
@@ -61,11 +59,8 @@ class TaskCreateFormTests(TestCase):
         self.post.refresh_from_db()
         self.assertEqual(self.post.text, 'текст новый')
 
-
     def test_guest_create_post(self):
         posts_count = Post.objects.count()
         form_data = {'text': 'Тестовый текст'}
         self.guest_client.post(reverse('posts:post_create'), data=form_data)
         self.assertEqual(Post.objects.count(), posts_count)
-
-  

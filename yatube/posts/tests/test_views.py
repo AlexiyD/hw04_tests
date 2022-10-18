@@ -6,6 +6,7 @@ from ..models import Group, Post, User
 amount_posts: int = 10
 test_amposts: int = 20
 
+
 class PostsViewsTests(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -160,6 +161,8 @@ class PaginatorViewsTest(TestCase):
         for reverse_name in pages_names:
             with self.subTest(reverse_name=reverse_name):
                 response = self.guest_client.get(reverse_name)
-                self.assertEqual(len(response.context['page_obj']), amount_posts)
+                self.assertEqual(len(response.context['page_obj']),
+                amount_posts)
                 response = self.guest_client.get(reverse_name + '?page=2')
-                self.assertEqual(len(response.context['page_obj']), amount_posts)
+                self.assertEqual(len(response.context['page_obj']),
+                amount_posts)

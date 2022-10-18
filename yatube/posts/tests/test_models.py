@@ -3,6 +3,7 @@ from ..models import Group, Post, User
 
 length: int = 15
 
+
 class TaskModelTest(TestCase):
     @classmethod
     def setUpClass(cls):
