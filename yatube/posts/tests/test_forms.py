@@ -72,4 +72,3 @@ class TaskCreateFormTests(TestCase):
         edit_post = Post.objects.get(id=self.post.pk)
         self.assertEqual(edit_post, self.post)
         self.assertEqual(Post.objects.count(), posts_count)
-
