@@ -57,7 +57,7 @@ class TaskCreateFormTests(TestCase):
         self.assertRedirects(response, reverse('posts:post_detail',
                              kwargs={'post_id': self.post.pk}))
         self.post.refresh_from_db()
-        self.assertEqual(self.post.text, 'текст новый')
+        self.assertEqual(form_data['text'], 'текст новый')
 
     def test_guest_create_post(self):
         posts_count = Post.objects.count()
