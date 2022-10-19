@@ -64,3 +64,12 @@ class TaskCreateFormTests(TestCase):
         form_data = {'text': 'Тестовый текст'}
         self.guest_client.post(reverse('posts:post_create'), data=form_data)
         self.assertEqual(Post.objects.count(), posts_count)
+
+    def test_guest_edit_post(self):
+        posts_count = Post.objects.count()
+        form_data = {'text': 'редактированый текст'}
+        self.guest_client.post(reverse('posts:post_create'), data=form_data)
+        edit_post = Post.objects.get(id=self.post.pk)
+        self.assertEqual(edit_post, self.post)
+        self.assertEqual(Post.objects.count(), posts_count)
+
