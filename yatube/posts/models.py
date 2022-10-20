@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 length: int = 15
 
+
 class Group(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=255, unique=True, db_index=True,
