@@ -21,7 +21,6 @@ class TaskModelTest(TestCase):
 
     def test_models_have_correct_object_names(self):
         self.assertEqual(str(self.post), self.post.text[:length])
-        
 
     def test_models_have_correct_object_names_group(self):
         self.assertEqual(str(self.group), self.group.title)
