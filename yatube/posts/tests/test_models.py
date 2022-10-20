@@ -16,7 +16,7 @@ class TaskModelTest(TestCase):
         )
         cls.post = Post.objects.create(
             author=cls.user,
-            text='Тестовый пост!',
+            text='Тестовый пост))))))))))))))))',
         )
 
     def test_models_have_correct_object_names(self):
